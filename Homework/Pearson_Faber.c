@@ -12,30 +12,46 @@ int main()
   int num;
   pid_t p;
 
-  printf("Assignment 1 Ryan Pearson, James Faber.\n Enter a positive Number.\n");
+  printf("Assignment 1 Ryan Pearson, James Faber.\n");
   p = fork();
   if (p > 0)
   {
-
-    printf("Parent process id = %d\n", getpid());
-    printf("Parent will wait until child finishes.\n");
+    printf("Parent process id = %d\nParent will wait until child finishes.\n", getpid());
     wait(NULL); // The wait() system call will force parent to wait
-    printf("\n Parent resumes as child completed.\n");
-    printf("Patent done!\n\n");
+    printf("Parent Resumes.\nParent done!");
   }
   else if (p == 0)
   {
-    printf("Child process id = %d\n", getpid());
-    printf("\n Child executing (the ls process)..\n");
+    int num;
+    printf("Chid process starting, Child process id is: %d\n", getpid());
+    printf("Enter a positive Number: ");
+    scanf("%d", &num);
+    if (num < 1)
+    {
+      fprintf(stderr, "Number is not positive, exiting\n");
+      return 1;
+    }
+    do
+    {
+      if (num % 2 == 0)
+      {
+        printf("%d ", num);
+        num = num / 2;
+      }
+      else
+      {
+        printf("%d ", num);
+        num = 3 * num + 1;
+      }
+    } while (num != 1);
+    printf("%d ", num);
+    printf("\nChild Completed Returning to parent.\n");
   }
   else
   {
     fprintf(stderr, "Forking failed.. code terminating");
     return 1;
   }
-  scanf("%d", &num);
-  //printf("\nYour Number is: %d", num);
-  printf("pid of parent: %d\n", getpid()); //parent's id is printed
 
   return 0;
 }
