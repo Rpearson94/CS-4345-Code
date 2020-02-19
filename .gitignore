@@ -1,2 +1,3 @@
 *.sh
 *.pdf
+.DS_Store
