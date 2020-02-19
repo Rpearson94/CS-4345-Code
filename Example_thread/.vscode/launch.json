@@ -1,0 +1,31 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Thread_Runnable",
+      "request": "launch",
+      "mainClass": "Thread_Runnable",
+      "projectName": "Example_thread_78081293"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Thread_Join",
+      "request": "launch",
+      "mainClass": "Thread_Join",
+      "projectName": "Example_thread_78081293"
+    },
+    {
+      "type": "java",
+      "name": "Debug (Launch) - Current File",
+      "request": "launch",
+      "mainClass": "${file}"
+    },
+    {
+      "type": "java",
+      "name": "Debug (Launch)-Thread_Extend<Example_thread_78081293>",
+      "request": "launch",
+      "mainClass": "Thread_Extend",
+      "projectName": "Example_thread_78081293"
+    }
+  ]
+}
