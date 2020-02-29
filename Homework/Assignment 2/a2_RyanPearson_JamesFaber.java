@@ -7,24 +7,28 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 class a2_RyanPearson_JamesFaber {
   public static void main(final String[] args) throws Exception {
-    final BlockingQueue<Integer> matrixQueue = new ArrayBlockingQueue<Integer>(1024);
-    try {
-      final File input = new File(args[0]);
-      final Scanner fileReader = new Scanner(input);
-      while (fileReader.hasNext()) {
-        final int data = fileReader.nextInt();
-        // System.out.println(data);
-      }
-      fileReader.close();
-    } catch (final FileNotFoundException e) {
-      System.out.println("An error occurred.");
-      e.printStackTrace();
+    Queue<Integer> matrixQueue = new LinkedList<Integer>();
+    matrixQueue = getFileData(args[0], matrixQueue);
+    // for (int i = matrixQueue.size() - 1; i >= 0; i--) {
+    // System.out.println(matrixQueue.remove());
+    // }
+  }
+
+  public static Queue<Integer> getFileData(String arg1, Queue<Integer> mxQueue) throws FileNotFoundException {
+    final File input = new File(arg1);
+    final Scanner fileReader = new Scanner(input);
+    while (fileReader.hasNextInt()) {
+      final int data = fileReader.nextInt();
+      // System.out.println(data);
+      mxQueue.add(data);
     }
+    fileReader.close();
+    return mxQueue;
   }
 }
