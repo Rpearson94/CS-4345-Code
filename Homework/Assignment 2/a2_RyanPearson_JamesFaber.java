@@ -48,25 +48,8 @@ class a2_RyanPearson_JamesFaber {
       System.exit(1);
     }
 
-    // Testing print statements (Remove before submission.)
+    // Creating threads to perform math calculations.
 
-    // System.out.printf("%d,%d,%d,%d", matrixARow, matrixAColumn, matrixBRow,
-    // matrixBColumn);
-    // for (int i = matrixQueue.size() - 1; i >= 0; i--) {
-    // System.out.println(matrixQueue.remove());
-    // }
-    // System.out.println("Test Print.\n Matrix A");
-    // for (int i = 0; i < matrixA.length; i++) {
-    // for (int j = 0; j < matrixA[i].length; j++) {
-    // System.out.println(matrixA[i][j]);
-    // }
-    // }
-    // System.out.println("Matrix B");
-    // for (int i = 0; i < matrixB.length; i++) {
-    // for (int j = 0; j < matrixB[i].length; j++) {
-    // System.out.println(matrixB[i][j]);
-    // }
-    // }
   }
 
   public static Queue<Integer> getFileData(String arg1, Queue<Integer> mxQueue) throws FileNotFoundException {
