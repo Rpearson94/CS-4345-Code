@@ -1,3 +1,6 @@
 *.sh
 *.pdf
 .DS_Store
+*.class
+.vscode
+*.txt
