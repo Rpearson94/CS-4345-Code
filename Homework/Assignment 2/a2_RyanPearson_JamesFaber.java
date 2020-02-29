@@ -7,11 +7,16 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
 class a2_RyanPearson_JamesFaber {
+  public static int[][] matrixA;
+  public static int[][] matrixB;
+  public static int[][] matrixC;
+
   public static void main(final String[] args) throws Exception {
     // Temporary queue used to store data read from file.
     Queue<Integer> matrixQueue = new LinkedList<Integer>();
@@ -26,9 +31,9 @@ class a2_RyanPearson_JamesFaber {
     int matrixBColumn = matrixQueue.remove();
 
     // Gerating the two matrices that will store the values.
-    int[][] matrixA = new int[matrixARow][matrixAColumn];
-    int[][] matrixB = new int[matrixBRow][matrixBColumn];
-    int[][] matrixC = new int[matrixARow][matrixBRow];
+    matrixA = new int[matrixARow][matrixAColumn];
+    matrixB = new int[matrixBRow][matrixBColumn];
+    matrixC = new int[matrixARow][matrixBRow];
 
     // Checking to see if matrices columns are correct size, if so store in matrix
     // if not throw and exception and end the program.
@@ -57,6 +62,10 @@ class a2_RyanPearson_JamesFaber {
         t.start();
       }
     }
+    Thread.yield();
+    System.out.println(Arrays.toString(matrixC));
+    System.out.println("End of program.");
+
   }
 
   public static Queue<Integer> getFileData(String arg1, Queue<Integer> mxQueue) throws FileNotFoundException {
@@ -72,11 +81,19 @@ class a2_RyanPearson_JamesFaber {
 }
 
 class ThreadMath implements Runnable {
-  public ThreadMath(int a2, int b2) {
-    
+  int a, b;
+
+  int[][] matA, matB, matC;
+
+  public ThreadMath(int a, int b) {
+    this.a = a;
+    this.b = b;
   }
 
   public void run() {
+    int value = 0;
+    System.out.printf("Thread <%d,%d> starts calculation.\n", a + 1, b + 1);
     
+    System.out.printf("Thread <%d,%d> returns <%d>.\n", a + 1, b + 1, value);
   }
 }
