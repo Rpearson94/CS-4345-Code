@@ -1,6 +1,6 @@
 *.sh
 *.pdf
-.DS_Store
-*.class
-.vscode
 *.txt
+*.class
+.DS_Store
+.vscode
