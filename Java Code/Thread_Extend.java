@@ -1,5 +1,4 @@
 
-
 public class Thread_Extend {
 	public static void main(String[] args) {
 		ShowChar s = new ShowChar('A', 150);

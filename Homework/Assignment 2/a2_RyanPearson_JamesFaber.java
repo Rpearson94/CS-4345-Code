@@ -13,22 +13,25 @@ import java.util.Scanner;
 
 class a2_RyanPearson_JamesFaber {
   public static void main(final String[] args) throws Exception {
+    // Temporary queue used to store data read from file.
     Queue<Integer> matrixQueue = new LinkedList<Integer>();
-    boolean validSize;
 
+    // Funciton to safely check for valid file and store data in queue.
     matrixQueue = getFileData(args[0], matrixQueue);
 
+    // Storing the demensions of the 2 arrays in varables for later use.
     int matrixARow = matrixQueue.remove();
     int matrixAColumn = matrixQueue.remove();
     int matrixBRow = matrixQueue.remove();
     int matrixBColumn = matrixQueue.remove();
 
+    // Gerating the two matrices that will store the values.
     int[][] matrixA = new int[matrixARow][matrixAColumn];
     int[][] matrixB = new int[matrixBRow][matrixBColumn];
 
-    validSize = checkValidColumn(matrixAColumn, matrixBColumn);
-
-    if (validSize) {
+    // Checking to see if matrices columns are correct size, if so store in matrix
+    // if not throw and exception and end the program.
+    if (matrixAColumn == matrixBColumn) {
       for (int i = 0; i < matrixA.length; i++) {
         for (int j = 0; j < matrixA[i].length; j++) {
           matrixA[i][j] = matrixQueue.remove();
@@ -40,7 +43,9 @@ class a2_RyanPearson_JamesFaber {
         }
       }
     } else {
-      throw new Exception("Martices columns are not equal, please adjust the colum size to be equal.");
+      System.out
+          .println("Matrices do not have the same number of columns. Cannot perform calculations. \nExiting program.");
+      System.exit(1);
     }
 
     // Testing print statements (Remove before submission.)
@@ -50,19 +55,18 @@ class a2_RyanPearson_JamesFaber {
     // for (int i = matrixQueue.size() - 1; i >= 0; i--) {
     // System.out.println(matrixQueue.remove());
     // }
-    System.out.println("Test Print.\n Matrix A");
-    for (int i = 0; i < matrixA.length; i++) {
-      for (int j = 0; j < matrixA[i].length; j++) {
-        System.out.println(matrixA[i][j]);
-      }
-    }
-    System.out.println("Matrix B");
-    for (int i = 0; i < matrixB.length; i++) {
-      for (int j = 0; j < matrixB[i].length; j++) {
-        System.out.println(matrixB[i][j]);
-
-      }
-    }
+    // System.out.println("Test Print.\n Matrix A");
+    // for (int i = 0; i < matrixA.length; i++) {
+    // for (int j = 0; j < matrixA[i].length; j++) {
+    // System.out.println(matrixA[i][j]);
+    // }
+    // }
+    // System.out.println("Matrix B");
+    // for (int i = 0; i < matrixB.length; i++) {
+    // for (int j = 0; j < matrixB[i].length; j++) {
+    // System.out.println(matrixB[i][j]);
+    // }
+    // }
   }
 
   public static Queue<Integer> getFileData(String arg1, Queue<Integer> mxQueue) throws FileNotFoundException {
@@ -75,12 +79,5 @@ class a2_RyanPearson_JamesFaber {
     }
     fileReader.close();
     return mxQueue;
-  }
-
-  private static boolean checkValidColumn(int matrixAColumn, int matrixBColumn) {
-    boolean status = false;
-    if (matrixAColumn == matrixBColumn)
-      status = true;
-    return status;
   }
 }
