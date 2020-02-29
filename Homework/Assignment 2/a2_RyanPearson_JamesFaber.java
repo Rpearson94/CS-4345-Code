@@ -28,6 +28,7 @@ class a2_RyanPearson_JamesFaber {
     // Gerating the two matrices that will store the values.
     int[][] matrixA = new int[matrixARow][matrixAColumn];
     int[][] matrixB = new int[matrixBRow][matrixBColumn];
+    int[][] matrixC = new int[matrixARow][matrixBRow];
 
     // Checking to see if matrices columns are correct size, if so store in matrix
     // if not throw and exception and end the program.
@@ -48,8 +49,14 @@ class a2_RyanPearson_JamesFaber {
       System.exit(1);
     }
 
-    // Creating threads to perform math calculations.
-
+    // Create threads to perform math calculations.
+    for (int a = 0; a < matrixC.length; a++) {
+      for (int b = 0; b < matrixC[a].length; b++) {
+        ThreadMath tm = new ThreadMath(a, b);
+        Thread t = new Thread(tm);
+        t.start();
+      }
+    }
   }
 
   public static Queue<Integer> getFileData(String arg1, Queue<Integer> mxQueue) throws FileNotFoundException {
@@ -57,10 +64,19 @@ class a2_RyanPearson_JamesFaber {
     final Scanner fileReader = new Scanner(input);
     while (fileReader.hasNextInt()) {
       final int data = fileReader.nextInt();
-      // System.out.println(data);
       mxQueue.add(data);
     }
     fileReader.close();
     return mxQueue;
+  }
+}
+
+class ThreadMath implements Runnable {
+  public ThreadMath(int a2, int b2) {
+    
+  }
+
+  public void run() {
+    
   }
 }
