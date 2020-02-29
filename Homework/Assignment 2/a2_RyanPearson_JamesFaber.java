@@ -1,9 +1,9 @@
 /*
-  Assignment 2
-  CS 4345 Spring 2020
-  Ryan Pearson
-  James Faber
-*/
+ * Assignment 2
+ * CS 4345 Spring 2020
+ * Ryan Pearson
+ * James Faber
+ */
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,10 +39,12 @@ class a2_RyanPearson_JamesFaber {
           matrixB[i][j] = matrixQueue.remove();
         }
       }
-    } else
-      System.out.println("Martices columns are not equal.");
+    } else {
+      throw new Exception("Martices columns are not equal, please adjust the colum size to be equal.");
+    }
 
-    // Testing print statements
+    // Testing print statements (Remove before submission.)
+
     // System.out.printf("%d,%d,%d,%d", matrixARow, matrixAColumn, matrixBRow,
     // matrixBColumn);
     // for (int i = matrixQueue.size() - 1; i >= 0; i--) {
@@ -58,6 +60,7 @@ class a2_RyanPearson_JamesFaber {
     for (int i = 0; i < matrixB.length; i++) {
       for (int j = 0; j < matrixB[i].length; j++) {
         System.out.println(matrixB[i][j]);
+
       }
     }
   }
