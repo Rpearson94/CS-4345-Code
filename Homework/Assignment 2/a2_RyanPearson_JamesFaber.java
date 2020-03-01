@@ -60,16 +60,14 @@ class a2_RyanPearson_JamesFaber {
         ThreadMath tm = new ThreadMath(a, b);
         Thread t = new Thread(tm);
         t.start();
+        Thread.yield();
       }
     }
-    Thread.yield();
 
     for (int[] row : matrixC) {
       System.out.println(Arrays.toString(row));
     }
-
     System.out.println("End of program.");
-
   }
 
   public static Queue<Integer> getFileData(String arg1, Queue<Integer> mxQueue) throws FileNotFoundException {
@@ -98,7 +96,7 @@ class ThreadMath implements Runnable {
     int value = 0;
     System.out.printf("Thread <%d,%d> starts calculation.\n", a + 1, b + 1);
 
-    for (int i = 0; i < a2_RyanPearson_JamesFaber.matrixA[a].length; i++) {
+    for (int i = 0; i <= a2_RyanPearson_JamesFaber.matrixA[a].length; i++) {
       value = value + (a2_RyanPearson_JamesFaber.matrixA[a][i] * a2_RyanPearson_JamesFaber.matrixB[b][i]);
       a2_RyanPearson_JamesFaber.matrixC[a][b] = value;
     }
