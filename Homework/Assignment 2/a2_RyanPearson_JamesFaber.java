@@ -13,11 +13,14 @@ import java.util.Queue;
 import java.util.Scanner;
 
 class a2_RyanPearson_JamesFaber {
+
+  // Global arrays used to store data and perform calculations.
   public static int[][] matrixA;
   public static int[][] matrixB;
   public static int[][] matrixC;
 
   public static void main(final String[] args) throws Exception {
+
     // Temporary queue used to store data read from file.
     Queue<Integer> matrixQueue = new LinkedList<Integer>();
 
@@ -63,14 +66,16 @@ class a2_RyanPearson_JamesFaber {
         Thread.yield();
       }
     }
-
+    // Printing the final matrix and end of program line.
     for (int[] row : matrixC) {
       System.out.println(Arrays.toString(row));
     }
     System.out.println("End of program.");
   }
 
+  // Method used to ensure valid file and loop through the file into a queue
   public static Queue<Integer> getFileData(String arg1, Queue<Integer> mxQueue) throws FileNotFoundException {
+
     final File input = new File(arg1);
     final Scanner fileReader = new Scanner(input);
     while (fileReader.hasNextInt()) {
@@ -82,6 +87,7 @@ class a2_RyanPearson_JamesFaber {
   }
 }
 
+// Thread class that allows multiple threads and math logic.
 class ThreadMath implements Runnable {
   int a, b;
 
@@ -92,14 +98,17 @@ class ThreadMath implements Runnable {
     this.b = b;
   }
 
+  // Run method that performs calculations and adds value to the new matrix.
   public void run() {
     int value = 0;
+
     System.out.printf("Thread <%d,%d> starts calculation.\n", a + 1, b + 1);
 
     for (int i = 0; i <= a2_RyanPearson_JamesFaber.matrixA[a].length; i++) {
       value = value + (a2_RyanPearson_JamesFaber.matrixA[a][i] * a2_RyanPearson_JamesFaber.matrixB[b][i]);
       a2_RyanPearson_JamesFaber.matrixC[a][b] = value;
     }
+
     System.out.printf("Thread <%d,%d> returns <%d>.\n", a + 1, b + 1, value);
   }
 }
