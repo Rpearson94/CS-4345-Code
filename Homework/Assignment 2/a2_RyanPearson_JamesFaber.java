@@ -7,6 +7,7 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -58,14 +59,23 @@ class a2_RyanPearson_JamesFaber {
     }
 
     // Create threads to perform math calculations.
+    ArrayList<Thread> threadList = new ArrayList<Thread>();
+    ThreadMath t;
     for (int a = 0; a < matrixC.length; a++) {
       for (int b = 0; b < matrixC[a].length; b++) {
-        ThreadMath tm = new ThreadMath(a, b);
-        Thread t = new Thread(tm);
-        t.start();
-        Thread.yield();
+        t = new ThreadMath(a, b);
+        Thread t1 = new Thread(t);
+        threadList.add(t1);
+
       }
     }
+    for (int i = 0; i < matrixARow * matrixBRow; i++) {
+      threadList.get(i).start();
+    }
+    for (int i = 0; i < matrixARow * matrixBRow; i++) {
+      threadList.get(i).join();
+    }
+
     // Printing the final matrix and end of program line.
     for (int[] row : matrixC) {
       System.out.println(Arrays.toString(row));
