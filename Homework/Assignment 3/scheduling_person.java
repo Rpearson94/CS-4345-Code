@@ -57,36 +57,41 @@ public class scheduling_person {
     // Sort queue based on Id Value.
     Collections.sort(readyQueue);
 
+    // for (int i = 0; i < readyQueue.size(); i++) {
+    // System.out.println(readyQueue.get(i).toString());
+    // }
+
+    // Create scaner and decare vars for user input
     Scanner input = new Scanner(System.in);
     int priority;
     int id;
     int burst;
     boolean validId = true;
 
+    // Using Do While loops to check user input to ensure user entered values are
+    // correct.
     do {
       System.out.println("Enter an ID between 0 - 10 for your process.");
       id = input.nextInt();
       for (int i = 0; i < readyQueue.size(); i++) {
         if (readyQueue.get(i).getId() == id) {
           validId = false;
-        }
+        } else
+          validId = true;
       }
     } while (!validId);
 
     do {
       System.out.println("Enter a priority between 1 - 10 for your process.");
       priority = input.nextInt();
-    } while (priority > 0 || priority < 11);
+    } while (priority < 0 || priority > 11);
 
     do {
       System.out.println("Enter a burst length between 20 - 100 for your process.");
       burst = input.nextInt();
-    } while (burst > 19 || burst < 101);
+    } while (burst < 19 || burst > 101);
 
-    System.out.println(id + " " + priority + " " + burst);
+    // System.out.println(id + " " + priority + " " + burst);
 
-    // for (int i = 0; i < readyQueue.size(); i++) {
-    // System.out.println(readyQueue.get(i).toString());
-    // }
   }
 }
