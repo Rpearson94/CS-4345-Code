@@ -1,11 +1,15 @@
+/* 
+  Ryan Pearson
+  Assignment 3
+  CS 4345 Operating Systems
+*/
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
-public class pearson_a3 {
+public class scheduling_person {
 
-  public static class Process {
+  public static class Process implements Comparable<Process> {
     private int id;
     private int priority;
     private int burstLength;
@@ -16,15 +20,27 @@ public class pearson_a3 {
       this.burstLength = burstLength;
     }
 
+    public int getId() {
+      return id;
+    }
+
     @Override
     public String toString() {
       return "Process: " + id + "| Priority: " + priority + "| Burst Length: " + burstLength + "\n";
     }
+
+    @Override
+    public int compareTo(Process o) {
+      int compareId = ((Process) o).getId();
+      return this.id - compareId;
+    }
+
   }
 
   public static void main(String[] args) {
-    // Create queue to act as ready Queue
-    Queue<Process> readyQueue = new PriorityQueue<Process>();
+    // Create queue to act as ready Queue, Create list to hold random numbers for
+    // processes.
+    ArrayList<Process> readyQueue = new ArrayList<Process>();
     ArrayList<Integer> randomInts = new ArrayList<Integer>();
     for (int i = 0; i < 11; i++) {
       randomInts.add(i);
@@ -34,11 +50,14 @@ public class pearson_a3 {
       int priority = (int) (Math.random() * 9) + 1;
       int burst = (int) (Math.random() * 80) + 20;
       Process p = new Process(randomInts.get(i), priority, burst);
-      System.out.print(p.toString());
+      readyQueue.add(p);
+      // System.out.print(p.toString());
     }
+    // Sort queue based on Id Value.
+    Collections.sort(readyQueue);
 
-    for (int i = 0; i < readyQueue.size(); i++) {
-
-    }
+    // for (int i = 0; i < readyQueue.size(); i++) {
+    // System.out.println(readyQueue.get(i).toString());
+    // }
   }
 }
