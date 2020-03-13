@@ -112,5 +112,7 @@ public class scheduling_person {
     for (int i = 0; i < readyQueue.size(); i++) {
       System.out.println(readyQueue.get(i).toString());
     }
+
+    
   }
 }
