@@ -25,6 +25,14 @@ public class scheduling_person {
       return id;
     }
 
+    public int getPriority() {
+      return priority;
+    }
+
+    public int getBurstLength() {
+      return burstLength;
+    }
+
     @Override
     public String toString() {
       return "Process: " + id + "| Priority: " + priority + "| Burst Length: " + burstLength + "\n";
@@ -57,9 +65,10 @@ public class scheduling_person {
     // Sort queue based on Id Value.
     Collections.sort(readyQueue);
 
-    // for (int i = 0; i < readyQueue.size(); i++) {
-    // System.out.println(readyQueue.get(i).toString());
-    // }
+    System.out.println("Initial State.");
+    for (int i = 0; i < readyQueue.size(); i++) {
+      System.out.println(readyQueue.get(i).toString());
+    }
 
     // Create scaner and decare vars for user input
     Scanner input = new Scanner(System.in);
@@ -71,7 +80,7 @@ public class scheduling_person {
     // Using Do While loops to check user input to ensure user entered values are
     // correct.
     do {
-      System.out.println("Enter an ID between 0 - 10 for your process.");
+      System.out.print("Enter an ID between 0 - 10 for your process: ");
       id = input.nextInt();
       for (int i = 0; i < readyQueue.size(); i++) {
         if (readyQueue.get(i).getId() == id) {
@@ -82,16 +91,26 @@ public class scheduling_person {
     } while (!validId);
 
     do {
-      System.out.println("Enter a priority between 1 - 10 for your process.");
+      System.out.print("Enter a priority between 1 - 10 for your process: ");
       priority = input.nextInt();
     } while (priority < 0 || priority > 11);
 
     do {
-      System.out.println("Enter a burst length between 20 - 100 for your process.");
+      System.out.print("Enter a burst length between 20 - 100 for your process: ");
       burst = input.nextInt();
     } while (burst < 19 || burst > 101);
 
     // System.out.println(id + " " + priority + " " + burst);
 
+    // Adding new Process to the queue.
+    Process p = new Process(id, priority, burst);
+    readyQueue.add(p);
+
+    Collections.sort(readyQueue);
+
+    System.out.println("State after adding user process.");
+    for (int i = 0; i < readyQueue.size(); i++) {
+      System.out.println(readyQueue.get(i).toString());
+    }
   }
 }
