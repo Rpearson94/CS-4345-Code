@@ -6,11 +6,12 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class scheduling_person {
 
-  public static class Process implements Comparable<Process> {
+  public static class Process {
     private int id;
     private int priority;
     private int burstLength;
@@ -37,13 +38,6 @@ public class scheduling_person {
     public String toString() {
       return "Process: " + id + "| Priority: " + priority + "| Burst Length: " + burstLength + "\n";
     }
-
-    @Override
-    public int compareTo(Process o) {
-      int compareId = ((Process) o).getId();
-      return this.id - compareId;
-    }
-
   }
 
   public static void main(String[] args) {
@@ -63,7 +57,8 @@ public class scheduling_person {
       // System.out.print(p.toString());
     }
     // Sort queue based on Id Value.
-    Collections.sort(readyQueue);
+    // Collections.sort(readyQueue);
+    readyQueue.sort(Comparator.comparing(Process::getId));
 
     System.out.println("Initial State.");
     for (int i = 0; i < readyQueue.size(); i++) {
@@ -100,19 +95,25 @@ public class scheduling_person {
       burst = input.nextInt();
     } while (burst < 19 || burst > 101);
 
+    input.close();
     // System.out.println(id + " " + priority + " " + burst);
 
     // Adding new Process to the queue.
     Process p = new Process(id, priority, burst);
     readyQueue.add(p);
 
-    Collections.sort(readyQueue);
+    readyQueue.sort(Comparator.comparing(Process::getId));
+    // Collections.sort(readyQueue);
 
     System.out.println("State after adding user process.");
     for (int i = 0; i < readyQueue.size(); i++) {
       System.out.println(readyQueue.get(i).toString());
     }
 
-    
+    readyQueue.sort(Comparator.comparing(Process::getPriority));
+
+    for (int i = 0; i < readyQueue.size(); i++) {
+      System.out.println(readyQueue.get(i).toString());
+    }
   }
 }
