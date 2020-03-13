@@ -6,6 +6,7 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class scheduling_person {
 
@@ -55,6 +56,34 @@ public class scheduling_person {
     }
     // Sort queue based on Id Value.
     Collections.sort(readyQueue);
+
+    Scanner input = new Scanner(System.in);
+    int priority;
+    int id;
+    int burst;
+    boolean validId = true;
+
+    do {
+      System.out.println("Enter an ID between 0 - 10 for your process.");
+      id = input.nextInt();
+      for (int i = 0; i < readyQueue.size(); i++) {
+        if (readyQueue.get(i).getId() == id) {
+          validId = false;
+        }
+      }
+    } while (!validId);
+
+    do {
+      System.out.println("Enter a priority between 1 - 10 for your process.");
+      priority = input.nextInt();
+    } while (priority > 0 || priority < 11);
+
+    do {
+      System.out.println("Enter a burst length between 20 - 100 for your process.");
+      burst = input.nextInt();
+    } while (burst > 19 || burst < 101);
+
+    System.out.println(id + " " + priority + " " + burst);
 
     // for (int i = 0; i < readyQueue.size(); i++) {
     // System.out.println(readyQueue.get(i).toString());
