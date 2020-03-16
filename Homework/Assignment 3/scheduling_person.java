@@ -34,9 +34,13 @@ public class scheduling_person {
       return burstLength;
     }
 
+    public void setBurstLength(int burstLength) {
+      this.burstLength = burstLength;
+    }
+
     @Override
     public String toString() {
-      return "Process: " + id + "| Priority: " + priority + "| Burst Length: " + burstLength + "\n";
+      return "Process: " + id + "| Priority: " + priority + "| Burst Length: " + burstLength;
     }
   }
 
@@ -103,17 +107,90 @@ public class scheduling_person {
     readyQueue.add(p);
 
     readyQueue.sort(Comparator.comparing(Process::getId));
-    // Collections.sort(readyQueue);
 
     System.out.println("State after adding user process.");
     for (int i = 0; i < readyQueue.size(); i++) {
       System.out.println(readyQueue.get(i).toString());
     }
 
+    int SJFwait;
+    int PWait;
+    int RRWait;
+
+    // Method for SJF.
+    // SJFwait = shortestJobFirst(readyQueue);
+
+    // Method for Priority
+    // PWait = priorty(readyQueue);
+
+    // Method for Round Robin
+    RRWait = roundRobin(readyQueue);
+
+    // for (int i = 0; i < readyQueue.size(); i++) {
+    // System.out.println(readyQueue.get(i).toString());
+    // }
+  }
+
+  private static int roundRobin(ArrayList<Process> readyQueue) {
+    // Sorting queue based on priority.
+    System.out.println("Sorting Round Robin Queue");
+    readyQueue.sort(Comparator.comparing(Process::getId));
+
+    ArrayList<Process> tempQueue = new ArrayList<>();
+    tempQueue = readyQueue;
+
+    int wait = 0;
+    int count = 0;
+
+    while (tempQueue.size() > 0) {
+      if (count >= tempQueue.size()) {
+        count = 0;
+      }
+      if (tempQueue.get(count).getBurstLength() >= 20) {
+        int tempBurst = tempQueue.get(count).getBurstLength();
+        tempBurst = tempBurst - 20;
+        wait = wait + 20;
+        System.out.println(tempQueue.get(count).toString() + " | Round Robin | Total waiting Time: " + wait);
+        tempQueue.get(count).setBurstLength(tempBurst);
+        count++;
+      } else {
+        wait = wait + tempQueue.get(count).getBurstLength();
+        System.out.println(tempQueue.get(count).toString() + " | Round Robin | Total waiting Time: " + wait);
+        tempQueue.remove(count);
+        count++;
+      }
+
+    }
+    return wait;
+  }
+
+  private static int priorty(ArrayList<Process> readyQueue) {
+    // Sorting queue based on priority.
+
+    System.out.println("Sorting Prioriy Queue");
     readyQueue.sort(Comparator.comparing(Process::getPriority));
 
+    int wait = 0;
+
     for (int i = 0; i < readyQueue.size(); i++) {
-      System.out.println(readyQueue.get(i).toString());
+      wait += readyQueue.get(i).getBurstLength();
+      System.out.println(readyQueue.get(i).toString() + " | Priority | Total waiting Time: " + wait);
     }
+    return wait;
+  }
+
+  private static int shortestJobFirst(ArrayList<Process> readyQueue) {
+    // Sorting queue based on priority.
+
+    System.out.println("Sorting SJF Queue");
+    readyQueue.sort(Comparator.comparing(Process::getBurstLength));
+
+    int wait = 0;
+
+    for (int i = 0; i < readyQueue.size(); i++) {
+      wait += readyQueue.get(i).getBurstLength();
+      System.out.println(readyQueue.get(i).toString() + " | SJF | Total waiting Time: " + wait + "\n");
+    }
+    return wait;
   }
 }
