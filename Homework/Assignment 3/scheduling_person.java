@@ -11,39 +11,6 @@ import java.util.Scanner;
 
 public class scheduling_person {
 
-  public static class Process {
-    private int id;
-    private int priority;
-    private int burstLength;
-
-    Process(int id, int priority, int burstLength) {
-      this.id = id;
-      this.priority = priority;
-      this.burstLength = burstLength;
-    }
-
-    public int getId() {
-      return id;
-    }
-
-    public int getPriority() {
-      return priority;
-    }
-
-    public int getBurstLength() {
-      return burstLength;
-    }
-
-    public void setBurstLength(int burstLength) {
-      this.burstLength = burstLength;
-    }
-
-    @Override
-    public String toString() {
-      return "Process: " + id + "| Priority: " + priority + "| Burst Length: " + burstLength;
-    }
-  }
-
   public static void main(String[] args) {
     // Create queue to act as ready Queue, Create list to hold random numbers for
     // processes.
@@ -58,7 +25,6 @@ public class scheduling_person {
       int burst = (int) (Math.random() * 80) + 20;
       Process p = new Process(randomInts.get(i), priority, burst);
       readyQueue.add(p);
-      // System.out.print(p.toString());
     }
     // Sort queue based on Id Value.
     // Collections.sort(readyQueue);
@@ -100,7 +66,6 @@ public class scheduling_person {
     } while (burst < 19 || burst > 101);
 
     input.close();
-    // System.out.println(id + " " + priority + " " + burst);
 
     // Adding new Process to the queue.
     Process p = new Process(id, priority, burst);
@@ -113,22 +78,27 @@ public class scheduling_person {
       System.out.println(readyQueue.get(i).toString());
     }
 
-    int SJFwait;
-    int PWait;
-    int RRWait;
+    int sjfWait = 0;
+    int pWait = 0;
+    int rrWait = 0;
 
     // Method for SJF.
-    // SJFwait = shortestJobFirst(readyQueue);
+    sjfWait = shortestJobFirst(readyQueue);
 
     // Method for Priority
-    // PWait = priorty(readyQueue);
+    pWait = priorty(readyQueue);
 
     // Method for Round Robin
-    RRWait = roundRobin(readyQueue);
+    rrWait = roundRobin(readyQueue);
 
-    // for (int i = 0; i < readyQueue.size(); i++) {
-    // System.out.println(readyQueue.get(i).toString());
-    // }
+    int sjfAvg = sjfWait / 7;
+    int pAvg = pWait / 7;
+    int rrAvg = rrWait / 7;
+
+    System.out.println("\nShortest Job First Average Wait Time: " + sjfAvg);
+    System.out.println("Priority Average Wait Time: " + pAvg);
+    System.out.println("Round Robin Average Wait Time: " + rrAvg);
+    System.out.println("Optimal Order: \n 1. Shortest Job First. \n 2. Priority. \n 3. Round Robin.");
   }
 
   private static int roundRobin(ArrayList<Process> readyQueue) {
@@ -139,7 +109,7 @@ public class scheduling_person {
     ArrayList<Process> tempQueue = new ArrayList<>();
     tempQueue = readyQueue;
 
-    int wait = 0;
+    int rwait = 0;
     int count = 0;
 
     while (tempQueue.size() > 0) {
@@ -149,19 +119,18 @@ public class scheduling_person {
       if (tempQueue.get(count).getBurstLength() >= 20) {
         int tempBurst = tempQueue.get(count).getBurstLength();
         tempBurst = tempBurst - 20;
-        wait = wait + 20;
-        System.out.println(tempQueue.get(count).toString() + " | Round Robin | Total waiting Time: " + wait);
+        rwait = rwait + 20;
+        System.out.println(tempQueue.get(count).toString() + " | Round Robin | Total waiting Time: " + rwait);
         tempQueue.get(count).setBurstLength(tempBurst);
         count++;
       } else {
-        wait = wait + tempQueue.get(count).getBurstLength();
-        System.out.println(tempQueue.get(count).toString() + " | Round Robin | Total waiting Time: " + wait);
+        rwait = rwait + tempQueue.get(count).getBurstLength();
+        System.out.println(tempQueue.get(count).toString() + " | Round Robin | Total waiting Time: " + rwait);
         tempQueue.remove(count);
         count++;
       }
-
     }
-    return wait;
+    return rwait;
   }
 
   private static int priorty(ArrayList<Process> readyQueue) {
@@ -170,13 +139,13 @@ public class scheduling_person {
     System.out.println("Sorting Prioriy Queue");
     readyQueue.sort(Comparator.comparing(Process::getPriority));
 
-    int wait = 0;
+    int pwait = 0;
 
     for (int i = 0; i < readyQueue.size(); i++) {
-      wait += readyQueue.get(i).getBurstLength();
-      System.out.println(readyQueue.get(i).toString() + " | Priority | Total waiting Time: " + wait);
+      pwait += readyQueue.get(i).getBurstLength();
+      System.out.println(readyQueue.get(i).toString() + " | Priority | Total waiting Time: " + pwait);
     }
-    return wait;
+    return pwait;
   }
 
   private static int shortestJobFirst(ArrayList<Process> readyQueue) {
@@ -185,12 +154,46 @@ public class scheduling_person {
     System.out.println("Sorting SJF Queue");
     readyQueue.sort(Comparator.comparing(Process::getBurstLength));
 
-    int wait = 0;
+    int swait = 0;
 
     for (int i = 0; i < readyQueue.size(); i++) {
-      wait += readyQueue.get(i).getBurstLength();
-      System.out.println(readyQueue.get(i).toString() + " | SJF | Total waiting Time: " + wait + "\n");
+      swait += readyQueue.get(i).getBurstLength();
+      System.out.println(readyQueue.get(i).toString() + " | SJF | Total waiting Time: " + swait + "\n");
     }
-    return wait;
+    return swait;
   }
+
+  public static class Process {
+    private int id;
+    private int priority;
+    private int burstLength;
+
+    Process(int id, int priority, int burstLength) {
+      this.id = id;
+      this.priority = priority;
+      this.burstLength = burstLength;
+    }
+
+    public int getId() {
+      return id;
+    }
+
+    public int getPriority() {
+      return priority;
+    }
+
+    public int getBurstLength() {
+      return burstLength;
+    }
+
+    public void setBurstLength(int burstLength) {
+      this.burstLength = burstLength;
+    }
+
+    @Override
+    public String toString() {
+      return "Process: " + id + "| Priority: " + priority + "| Burst Length: " + burstLength;
+    }
+  }
+
 }
