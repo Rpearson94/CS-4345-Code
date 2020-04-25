@@ -9,19 +9,24 @@ import java.util.Collections;
 */
 
 public class Assignment4 {
-  public static void main(String[] args) {
-    // Create an arraylist of 100 cars.
-    ArrayList<Integer> cars = new ArrayList<Integer>();
 
-    for (int i = 0; i <= 100; i++) {
-      cars.add(i);
+  static class Common {
+    // Create an arraylist of 100 cars.
+    static ArrayList<Integer> cars = new ArrayList<>();
+
+    static int tunnel = 0;
+  }
+
+  class NewThread extends Thread {
+
+  }
+
+  public static void main(final String[] args) {
+
+    for (int i = 0; i < 101; i++) {
+      Common.cars.add(i);
     }
 
-    // Shuffle Cars in to random order.
-    Collections.shuffle(cars);
-
-    // for (int car : cars) {
-    // System.out.print(car);
-    // }
+    Collections.shuffle(Common.cars);
   }
 }
