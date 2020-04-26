@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.concurrent.Semaphore;
 
 /* CS4345
  * Spring 2020
@@ -9,24 +8,67 @@ import java.util.Collections;
 */
 
 public class Assignment4 {
+  public static void main(String[] args) throws InterruptedException {
+    int car = 1;
+    Semaphore gate = new Semaphore(1);
+
+    while (true) {
+      Threads t = new Threads(gate, car);
+      Thread t1 = new Thread(t);
+      t1.start();
+      car++;
+      try {
+        t1.join(2500);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
 
   static class Common {
-    // Create an arraylist of 100 cars.
-    static ArrayList<Integer> cars = new ArrayList<>();
-
     static int tunnel = 0;
   }
 
-  class NewThread extends Thread {
+  static class Threads extends Thread {
+    Semaphore gate;
+    int car;
 
-  }
-
-  public static void main(final String[] args) {
-
-    for (int i = 0; i < 101; i++) {
-      Common.cars.add(i);
+    public Threads(Semaphore gate, int car) {
+      this.gate = gate;
+      this.car = car;
     }
 
-    Collections.shuffle(Common.cars);
+    @Override
+    public void run() {
+      if (car % 2 == 0) {
+        System.out.println("Left-bound Car " + car + " Wants to enter the tunnel.");
+        try {
+          gate.acquire();
+          System.out.println("Left-bound Car " + car + " is in the tunnel.");
+          Common.tunnel++;
+          Thread.sleep(3000);
+          Common.tunnel--;
+          System.out.println("Left-bound Car " + car + " is exiting tunnel.");
+        } catch (InterruptedException exc) {
+          System.out.println(exc);
+        }
+        gate.release();
+      }
+
+      else {
+        System.out.println("Right-bound Car " + car + " Wants to enter the tunnel.");
+        try {
+          gate.acquire();
+          System.out.println("Right-bound Car " + car + " is in the tunnel.");
+          Common.tunnel++;
+          Thread.sleep(3500);
+          Common.tunnel--;
+          System.out.println("Right-bound Car " + car + " is exiting tunnel.");
+        } catch (InterruptedException exc) {
+          System.out.println(exc);
+        }
+        gate.release();
+      }
+    }
   }
 }
